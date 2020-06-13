@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 // import {robots} from'./robots';
-import CardList from './components/CardList';
-import SearchBox from './components/SearchBox';
-import './containers/App.css';
-import Scroll from './components/Scroll';
-import ErrorBoundry from './components/ErrorBoundry';
-
+import CardList from './CardList';
+import SearchBox from './SearchBox';
+import './App.css';
+import Scroll from './Scroll';
 
 class App extends Component {
 
@@ -38,15 +36,13 @@ class App extends Component {
     }
 
     render(){
-        //To remove this.state.blah from code and generalize it by destructuring,
-         const {robots, searchfield} = this.state;
         //Here we use searchfield state to get the event value from onSearchChange coming from SearchBox.js and filter the robots according to that event value
-        const filterRobots = robots.filter(robot => 
-            {                                         //before -- this.state.searchfield.toLowerCase()
-            return  robot.name.toLowerCase().includes(searchfield.toLowerCase());
+        const filterRobots = this.state.robots.filter(robots => 
+            {
+            return  robots.name.toLowerCase().includes(this.state.searchfield.toLowerCase());
         })
 
-        if(!robots.length){
+        if(this.state.robots.length === 0){
             return <h1 className="tc">Loading...</h1>
         }else{
             return(
@@ -55,9 +51,7 @@ class App extends Component {
                     <SearchBox searchChange={this.onSearchChange} />
                     {/* <CardList robots = {robots}/> */}
                     <Scroll>
-                        <ErrorBoundry>
-                            <CardList robots = {filterRobots}/>
-                        </ErrorBoundry>
+                        <CardList robots = {filterRobots}/>
                     </Scroll>
                    
                 </div>
